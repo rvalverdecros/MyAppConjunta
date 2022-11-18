@@ -71,21 +71,35 @@ class GestorBDD private constructor(){
     }
 
     fun crear(dni:String,nombre:String,edad:String,ciudad:String){
-        val crear = "INSERT INTO `alumnos`(`DNI`, `Nombre`, `Edad`, `Ciudad`) VALUES ('$dni','$nombre','$edad','$ciudad');"
-        val st = conn?.createStatement()
-        val rs1 = st?.executeUpdate(crear)
-        if (rs1 != null){
-            println("Total de lineas creadas: $rs1")
+        val crear = Setencias.crear
+        try {
+            conn?.prepareStatement(crear).use { st ->
+                st?.setString(1,dni)
+                st?.setString(2,nombre)
+                st?.setString(3,edad)
+                st?.setString(4,ciudad)
+                if (st != null) {
+                    st.executeUpdate() > 0
+                }
+            }
+            conn?.commit()
+        } catch (e: SQLException) {
+            printSQLException(e)
         }
     }
 
     fun deletePorNombre(nombre:String){
-        val borrar = "DELETE FROM `alumnos` WHERE `Nombre`='$nombre';"
-        val st = conn?.createStatement()
-        val rs1 = st?.executeUpdate(borrar)
-
-        if (rs1 != null){
-            println("Total de lineas eliminadas: $rs1")
+        val borrar = Setencias.borrar
+        try {
+            conn?.prepareStatement(borrar).use { st ->
+                st?.setString(1,nombre)
+                if (st != null) {
+                    st.executeUpdate() > 0
+                }
+            }
+            conn?.commit()
+        } catch (e: SQLException) {
+            printSQLException(e)
         }
     }
 
