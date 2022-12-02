@@ -19,5 +19,13 @@ class AppVista() {
         println("No hay alumnos disponibles")
     }
 
+    fun updateTrue() {
+        println("Se ha modificado correctamente")
+    }
+
+    fun updateFalse() {
+        println("Ha ocurrido un error en la modificación")
+    }
+
 
 }

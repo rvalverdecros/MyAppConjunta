@@ -28,6 +28,18 @@ class AppControlador(val vista: AppVista) {
 
     }
 
+    fun modifyAlumn(nombre : String, dni : String){
+
+        val update = gestorBDD.actualizar(dni, nombre)
+
+        if (update){
+            vista.updateTrue()
+        }else{
+            vista.updateFalse()
+        }
+
+    }
+
     fun conectarBD(){
         gestorBDD.conectarBD()
     }

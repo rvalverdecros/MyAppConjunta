@@ -22,7 +22,6 @@ class GestorBDD private constructor(){
     private val bd = "bddeprueba"
     private val user = "root"
     private val pass = ""
-    private val selectAll = "SELECT * FROM alumnos;"
 
 
 
@@ -70,7 +69,7 @@ class GestorBDD private constructor(){
         }
     }
 
-    fun actualizar(dni:String,nombre:String){
+    fun actualizar(dni:String,nombre:String) : Boolean{
         val actualizar = Setencias.actualizar
         try {
             conn?.prepareStatement(actualizar).use { st ->
@@ -81,9 +80,10 @@ class GestorBDD private constructor(){
                 }
             }
             conn?.commit()
+            return true
         } catch (e: SQLException) {
             conn?.rollback()
-            printSQLException(e)
+            return false
         }
 
     }

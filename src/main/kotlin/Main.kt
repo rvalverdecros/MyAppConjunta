@@ -9,7 +9,7 @@ fun main() {
 
     controlador.conectarBD()
 
-    controlador.allAlumns()
+    controlador.modifyAlumn("Diego","2234777T")
 
     controlador.desconectarBD()
 }
