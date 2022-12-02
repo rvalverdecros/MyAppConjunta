@@ -65,6 +65,7 @@ class GestorBDD private constructor(){
             }
             conn?.commit()
         } catch (e: SQLException) {
+            conn?.rollback()
             printSQLException(e)
         }
 
@@ -84,6 +85,7 @@ class GestorBDD private constructor(){
             }
             conn?.commit()
         } catch (e: SQLException) {
+            conn?.rollback()
             printSQLException(e)
         }
     }
@@ -99,6 +101,7 @@ class GestorBDD private constructor(){
             }
             conn?.commit()
         } catch (e: SQLException) {
+            conn?.rollback()
             printSQLException(e)
         }
     }
