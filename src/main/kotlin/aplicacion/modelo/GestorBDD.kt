@@ -1,14 +1,16 @@
+package aplicacion.modelo
+
+import aplicacion.modelo.clases.Alumno
 import java.sql.Connection
 import java.sql.DriverManager
-import Setencias
 import java.sql.SQLException
 
 class GestorBDD private constructor(){
 
     companion object{
         @Volatile
-        private var instance:GestorBDD? = null
-        fun getInstance():GestorBDD{
+        private var instance: GestorBDD? = null
+        fun getInstance(): GestorBDD {
             if (instance == null){
                 instance = GestorBDD()
             }
@@ -38,18 +40,33 @@ class GestorBDD private constructor(){
         }
     }
 
-    fun selectAll(){
-        val st = conn?.createStatement()
-        val rs1 = st?.executeQuery(Setencias.selectAll)
-        if (rs1 != null) {
-            while (rs1.next()){
-                println("--------------------------------------------------------------------------")
-                println(rs1.getString("DNI"))
-                println(rs1.getString("Nombre"))
-                println(rs1.getString("Edad"))
-                println(rs1.getString("Ciudad"))
-                println("--------------------------------------------------------------------------")
+    fun selectAllAlumnos() : List<Alumno>? {
+
+
+
+        val lisAlumnos = mutableListOf<Alumno>()
+
+        try {
+
+            val st = conn?.createStatement()
+            val rs1 = st?.executeQuery(Setencias.selectAll)
+            if (rs1 != null) {
+                while (rs1.next()){
+                    val alumno = Alumno()
+
+                    alumno.dni = rs1.getString("DNI")
+                    alumno.nombre = rs1.getString("Nombre")
+                    alumno.edad = rs1.getInt("Edad")
+                    alumno.ciudad = rs1.getString("Ciudad")
+
+                    lisAlumnos.add(alumno)
+                }
             }
+
+            return lisAlumnos
+
+        }catch (e : SQLException){
+            return null
         }
     }
 

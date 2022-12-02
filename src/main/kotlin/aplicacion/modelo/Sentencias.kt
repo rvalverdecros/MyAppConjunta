@@ -1,3 +1,5 @@
+package aplicacion.modelo
+
 object Setencias {
     val selectAll = "SELECT * FROM alumnos;"
     val actualizar = "UPDATE `alumnos` SET `DNI`=? WHERE `Nombre`=?;"
