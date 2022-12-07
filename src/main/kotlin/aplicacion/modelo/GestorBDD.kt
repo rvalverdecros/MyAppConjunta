@@ -1,5 +1,6 @@
 package aplicacion.modelo
 
+import aplicacion.modelo.Setencias.createTabla
 import aplicacion.modelo.clases.Alumno
 import java.sql.Connection
 import java.sql.DriverManager
@@ -88,39 +89,60 @@ class GestorBDD private constructor(){
 
     }
 
-    fun crear(dni:String,nombre:String,edad:String,ciudad:String){
+    fun crear(dni:String,nombre:String,edad:Int,ciudad:String):Boolean{
         val crear = Setencias.crear
         try {
             conn?.prepareStatement(crear).use { st ->
                 st?.setString(1,dni)
                 st?.setString(2,nombre)
-                st?.setString(3,edad)
+                st?.setInt(3,edad)
                 st?.setString(4,ciudad)
                 if (st != null) {
                     st.executeUpdate() > 0
                 }
             }
             conn?.commit()
+            return true
         } catch (e: SQLException) {
             conn?.rollback()
-            printSQLException(e)
+            return false
         }
     }
 
-    fun deletePorNombre(nombre:String){
+    fun deletePorDNI(dni:String):Boolean{
         val borrar = Setencias.borrar
         try {
             conn?.prepareStatement(borrar).use { st ->
-                st?.setString(1,nombre)
+                st?.setString(1,dni)
                 if (st != null) {
                     st.executeUpdate() > 0
                 }
             }
             conn?.commit()
+            return true
         } catch (e: SQLException) {
             conn?.rollback()
-            printSQLException(e)
+            return false
         }
+    }
+
+     fun createTable():Boolean {
+         if (selectAllAlumnos() == null) {
+             var tablacreada = false
+             try {
+
+                 conn?.createStatement().use { st ->
+                     st?.execute(createTabla)
+                     tablacreada = true
+                 }
+                 conn?.commit()
+             } catch (e: SQLException) {
+                 conn?.rollback()
+             }
+             return tablacreada
+         }else{
+             return true
+         }
     }
 
     fun desconexion(){

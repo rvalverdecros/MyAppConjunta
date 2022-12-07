@@ -27,5 +27,29 @@ class AppVista() {
         println("Ha ocurrido un error en la modificación")
     }
 
+    fun createTrue() {
+        println("Se ha creado correctamente")
+    }
+
+    fun createFalse() {
+        println("Ha ocurrido un error en la creación")
+    }
+
+    fun deleteTrue() {
+        println("Se ha eliminado correctamente")
+    }
+
+    fun deleteFalse() {
+        println("Ha ocurrido un error en el borrado")
+    }
+
+    fun prepareTrue() {
+        println("Se preparo la Tabla correctamente")
+    }
+
+    fun prepareFalse() {
+        println("Hubo un error en la creacion de la tabla")
+    }
+
 
 }

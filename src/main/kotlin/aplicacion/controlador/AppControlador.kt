@@ -22,6 +22,7 @@ class AppControlador(val vista: AppVista) {
 
             for (alumno in lisAlumnos) {
                 vista.showAlumn(alumno)
+                println("----------------------------------------")
             }
 
         }
@@ -38,6 +39,34 @@ class AppControlador(val vista: AppVista) {
             vista.updateFalse()
         }
 
+    }
+
+    fun createAlumn(dni: String, nombre: String, edad: Int, ciudad: String){
+        val create = gestorBDD.crear(dni,nombre,edad,ciudad)
+
+        if (create){
+            vista.createTrue()
+        }else{
+            vista.createFalse()
+        }
+    }
+
+    fun deleteAlumnByDNI(dni: String){
+        val delete = gestorBDD.deletePorDNI(dni)
+
+        if (delete){
+            vista.deleteTrue()
+        }else{
+            vista.deleteFalse()
+        }
+    }
+    fun createTable(){
+        val crearTabla = gestorBDD.createTable()
+        if (crearTabla){
+            vista.prepareTrue()
+        }else{
+            vista.prepareFalse()
+        }
     }
 
     fun conectarBD(){
